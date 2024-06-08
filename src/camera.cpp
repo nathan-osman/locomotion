@@ -22,15 +22,32 @@
  * IN THE SOFTWARE.
  */
 
-#include <iostream>
-
 #include "camera.hpp"
 
-int main(int argc, char **argv)
+Camera::Camera()
+    : mCameraManager(std::make_unique<libcamera::CameraManager>())
 {
-    Camera camera;
+}
 
-    camera.init();
+Camera::~Camera()
+{
+    if (mCamera) {
+        mCamera->release();
+    }
+}
 
-    return 0;
+bool Camera::init()
+{
+    if (mCameraManager->start() != 0) {
+        return false;
+    }
+    if (!mCameraManager->cameras().size()) {
+        return false;
+    }
+    mCamera = mCameraManager->get(mCameraManager->cameras().at(0)->id());
+    if (mCamera->acquire() != 0) {
+        mCamera = nullptr;
+        return false;
+    }
+    return true;
 }

@@ -22,15 +22,26 @@
  * IN THE SOFTWARE.
  */
 
-#include <iostream>
+#ifndef CAMERA_HPP
+#define CAMERA_HPP
 
-#include "camera.hpp"
+#include <memory>
 
-int main(int argc, char **argv)
+#include <libcamera/libcamera.h>
+
+class Camera
 {
-    Camera camera;
+public:
 
-    camera.init();
+    Camera();
+    ~Camera();
 
-    return 0;
-}
+    bool init();
+
+private:
+
+    std::unique_ptr<libcamera::CameraManager> mCameraManager;
+    std::shared_ptr<libcamera::Camera> mCamera;
+};
+
+#endif // CAMERA_HPP

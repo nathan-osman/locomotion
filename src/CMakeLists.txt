@@ -1,4 +1,6 @@
 set(SRC
+    camera.cpp
+    camera.hpp
     main.cpp
 )
 
