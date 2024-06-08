@@ -3,6 +3,6 @@ project(locomotion)
 
 # Make sure libcamera is available
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(CAMERA REQUIRED camera)
+pkg_check_modules(LIBCAMERA REQUIRED libcamera)
 
 add_subdirectory(src)
